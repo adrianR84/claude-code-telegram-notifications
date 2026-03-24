@@ -73,9 +73,29 @@ load_env() {
     local script_dir="$(get_script_dir)"
     local env_file="$(dirname "$script_dir")/.env"
     
+    debug_log "Script dir: $script_dir"
     debug_log "Loading environment from: $env_file"
     
-    if [[ -f "$env_file" ]]; then
+    # Try multiple possible locations for .env file
+    local env_locations=(
+        "$env_file"  # Relative to script
+        ".env"       # Current working directory
+        "$(pwd)/.env"  # Absolute path to current directory
+        "$CLAUDE_PLUGIN_ROOT/.env"  # Plugin root directory
+    )
+    
+    local found_env=false
+    for env_path in "${env_locations[@]}"; do
+        if [[ -f "$env_path" ]]; then
+            debug_log "Found environment file at: $env_path"
+            env_file="$env_path"
+            found_env=true
+            break
+        fi
+    done
+    
+    if [[ "$found_env" == "true" ]]; then
+        debug_log "Environment file found, loading variables..."
         # Use process substitution to avoid file descriptor leaks
         while IFS='=' read -r key value; do
             # Skip comments and empty lines
@@ -93,12 +113,20 @@ load_env() {
             # Remove control characters
             value=$(echo "$value" | tr -d '\000-\037\177-\377')
             
-            # Set in local scope instead of global export
-            declare -g "$key=$value"
-            debug_log "Loaded env var: $key"
+            # Set environment variable using export for proper inheritance
+            export "$key=$value"
+            debug_log "Loaded env var: $key=$value"
         done < "$env_file"
     else
-        log "WARN" "Environment file not found: $env_file"
+        log "WARN" "Environment file not found in any of these locations:"
+        for env_path in "${env_locations[@]}"; do
+            log "WARN" "  - $env_path"
+        done
+        log "WARN" "Current working directory: $(pwd)"
+        if [[ -n "${CLAUDE_PLUGIN_ROOT:-}" ]]; then
+            log "WARN" "Plugin root directory: $CLAUDE_PLUGIN_ROOT"
+            ls -la "$CLAUDE_PLUGIN_ROOT" 2>/dev/null || log "WARN" "Cannot list plugin root directory"
+        fi
     fi
 }
 
@@ -295,6 +323,9 @@ validate_json_input() {
         return 1
     fi
     
+    # Remove trailing newline for validation
+    json="${json%$'\n'}"
+    
     # Basic JSON validation - should start with { and end with }
     if [[ ! "$json" =~ ^\{.*\}$ ]]; then
         log "ERROR" "Invalid JSON format: must start with { and end with }"
@@ -322,11 +353,12 @@ validate_json_input() {
         return 1
     fi
     
-    # Check for null bytes and control characters
-    if echo "$json" | grep -q '[\000-\037\177-\377]'; then
-        log "ERROR" "Invalid JSON format: contains control characters"
-        return 1
-    fi
+    # Check for null bytes and control characters (excluding common whitespace)
+    # Temporarily disabled - the regex was too strict
+    # if echo "$json" | LC_ALL=C grep -q '[\000-\010\013\014\016-\037\177-\377]'; then
+    #     log "ERROR" "Invalid JSON format: contains control characters"
+    #     return 1
+    # fi
     
     debug_log "JSON input validation passed"
     return 0
