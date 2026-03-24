@@ -82,6 +82,9 @@ Thumbs.db
 *.swo
 *~
 
+# Windsurf files
+.windsurf/
+
 # Test coverage reports
 coverage/
 *.lcov
