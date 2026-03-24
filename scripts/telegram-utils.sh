@@ -84,10 +84,19 @@ load_env() {
         "$CLAUDE_PLUGIN_ROOT/.env"  # Plugin root directory
     )
     
+    debug_log "Searching for .env file in these locations:"
+    for env_path in "${env_locations[@]}"; do
+        if [[ -f "$env_path" ]]; then
+            debug_log "  ✅ FOUND: $env_path"
+        else
+            debug_log "  ❌ Not found: $env_path"
+        fi
+    done
+    
     local found_env=false
     for env_path in "${env_locations[@]}"; do
         if [[ -f "$env_path" ]]; then
-            debug_log "Found environment file at: $env_path"
+            debug_log "Using environment file at: $env_path"
             env_file="$env_path"
             found_env=true
             break
@@ -102,6 +111,8 @@ load_env() {
             [[ $key =~ ^[[:space:]]*# ]] && continue
             [[ -z "$key" ]] && continue
             
+            debug_log "Processing line: key='$key', value='$value'"
+            
             # Validate key format (alphanumeric with underscores)
             if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
                 log "WARN" "Invalid environment variable name: $key"
@@ -113,9 +124,11 @@ load_env() {
             # Remove control characters
             value=$(echo "$value" | tr -d '\000-\037\177-\377')
             
+            debug_log "After sanitization: key='$key', value='$value'"
+            
             # Set environment variable using export for proper inheritance
             export "$key=$value"
-            debug_log "Loaded env var: $key=$value"
+            debug_log "Exported: $key=$value"
         done < "$env_file"
     else
         log "WARN" "Environment file not found in any of these locations:"
@@ -134,6 +147,10 @@ load_env() {
 init_telegram_config() {
     # Load environment variables
     load_env
+    
+    debug_log "Checking loaded environment variables:"
+    debug_log "  TELEGRAM_BOT_TOKEN: '${TELEGRAM_BOT_TOKEN:-NOT_SET}'"
+    debug_log "  TELEGRAM_CHAT_ID: '${TELEGRAM_CHAT_ID:-NOT_SET}'"
     
     local bot_token="$TELEGRAM_BOT_TOKEN"
     local chat_id="$TELEGRAM_CHAT_ID"
