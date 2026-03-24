@@ -30,20 +30,13 @@ Then install the plugin:
 /plugin install telegram-notifications@claude-code-telegram-notifications
 ```
 
-### Option 2: Clone from GitHub
-
-```bash
-git clone https://github.com/adrianR84/claude-code-telegram-notifications.git
-cd claude-code-telegram-notifications
-```
-
-### Option 3: Direct Plugin Install
+### Option 2: Direct Plugin Install
 
 ```bash
 claude-code plugin install https://github.com/adrianR84/claude-code-telegram-notifications
 ```
 
-### Option 4: Local Installation for Development
+### Option 3: Local Installation for Development
 
 ```bash
 # Clone the repository
