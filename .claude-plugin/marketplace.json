@@ -10,10 +10,7 @@
   "plugins": [
     {
       "name": "telegram-notifications",
-      "source": {
-        "source": "github",
-        "repo": "adrianR84/claude-code-telegram-notifications"
-      },
+      "source": "./",
       "description": "Telegram bot notifications for Claude Code events using Telegram Bot API",
       "version": "1.0.0",
       "author": {
