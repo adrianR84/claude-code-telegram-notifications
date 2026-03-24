@@ -2,22 +2,14 @@
   "hooks": {
     "Notification": [
       {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/telegram-notification.sh\""
-          }
-        ]
+        "type": "command",
+        "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/telegram-notification.sh\""
       }
     ],
     "Stop": [
       {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/telegram-stop.sh\""
-          }
-        ]
+        "type": "command",
+        "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/telegram-stop.sh\""
       }
     ]
   }
