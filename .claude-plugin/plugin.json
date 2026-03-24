@@ -1,0 +1,8 @@
+{
+  "name": "claude-code-telegram-notifications",
+  "description": "Telegram bot notifications for Claude Code events",
+  "version": "1.0.0",
+  "author": {
+    "name": "Adi R"
+  }
+}

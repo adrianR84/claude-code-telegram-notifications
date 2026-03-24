@@ -1,0 +1,23 @@
+{
+  "name": "claude-code-telegram-notifications",
+  "owner": {
+    "name": "Adi"
+  },
+  "metadata": {
+    "description": "Telegram bot notifications for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "telegram-notifications",
+      "source": "./",
+      "description": "Telegram bot notifications for Claude Code events using Telegram Bot API",
+      "version": "1.0.0",
+      "author": {
+        "name": "Adi"
+      },
+      "license": "MIT",
+      "keywords": ["telegram", "bot", "notifications", "hooks", "api"]
+    }
+  ]
+}
