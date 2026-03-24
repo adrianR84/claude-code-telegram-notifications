@@ -16,20 +16,26 @@ A Claude Code plugin that sends real-time notifications to your Telegram bot whe
 
 ## 📦 Installation
 
-### Option 1: Clone from GitHub
+### Option 1: Install from Marketplace
+
+```bash
+claude-code plugin install telegram-notifications
+```
+
+### Option 2: Clone from GitHub
 
 ```bash
 git clone https://github.com/adrianR84/claude-code-telegram-notifications.git
 cd claude-code-telegram-notifications
 ```
 
-### Option 2: Direct Plugin Install
+### Option 3: Direct Plugin Install
 
 ```bash
 claude-code plugin install https://github.com/adrianR84/claude-code-telegram-notifications
 ```
 
-### Option 3: Local Installation for Development
+### Option 4: Local Installation for Development
 
 ```bash
 # Clone the repository
