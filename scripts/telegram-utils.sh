@@ -263,14 +263,9 @@ sanitize_message() {
 escape_markdown() {
     local text="$1"
     
-    # Fast path: if no special characters, return as-is
-    if [[ "$text" != *'[_*[]()~`>#+\-=|{}.!\\'* ]]; then
-        echo "$text"
-        return
-    fi
-    
-    # Escape special characters for Telegram MarkdownV2 including backslash
-    echo "$text" | sed 's/[_*[]()~`>#+\-=|{}.!\\]/\\&/g'
+    # Only escape characters that actually need escaping in MarkdownV2
+    # Use sed with proper escaping
+    echo "$text" | sed 's/[_*\\[\\]()~`>#+\\-=|{}.!]/\\\\&/g'
 }
 
 # Send message to Telegram with retry logic
