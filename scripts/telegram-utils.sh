@@ -153,6 +153,9 @@ init_telegram_config() {
     # Load environment variables
     load_env
     
+    # Always show basic status (even without DEBUG)
+    log "INFO" "Telegram config check: BOT_TOKEN=${TELEGRAM_BOT_TOKEN:+SET}, CHAT_ID=${TELEGRAM_CHAT_ID:+SET}"
+    
     debug_log "Checking loaded environment variables:"
     debug_log "  TELEGRAM_BOT_TOKEN: '${TELEGRAM_BOT_TOKEN:-NOT_SET}'"
     debug_log "  TELEGRAM_CHAT_ID: '${TELEGRAM_CHAT_ID:-NOT_SET}'"

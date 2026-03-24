@@ -2,6 +2,13 @@
 # telegram-stop.sh
 # Sends a Telegram notification when Claude Code finishes responding.
 
+# Always show basic info for debugging
+echo "=== Telegram Stop Hook Debug ==="
+echo "Working directory: $(pwd)"
+echo "Script location: ${BASH_SOURCE[0]}"
+echo "CLAUDE_PLUGIN_ROOT: ${CLAUDE_PLUGIN_ROOT:-NOT_SET}"
+echo "=============================="
+
 # Load utilities
 source "$(dirname "${BASH_SOURCE[0]}")/telegram-utils.sh"
 
