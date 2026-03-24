@@ -1,123 +1,74 @@
 # Claude Code Telegram Notifications
 
-Telegram bot notifications for [Claude Code](https://claude.ai/code) events using the Telegram Bot API.
+A Claude Code plugin that sends real-time notifications to your Telegram bot when Claude Code events occur.
 
-## Features
+## 🚀 Features
 
-- **Notification Hook**: Sends a Telegram notification when Claude Code sends notifications (e.g., asking for input, tool permission requests)
-- **Stop Hook**: Sends a Telegram notification when Claude Code finishes responding
-- **Robust Error Handling**: Comprehensive validation and error reporting
-- **Retry Logic**: Automatic retries with exponential backoff for network issues
-- **Message Sanitization**: Input validation and message length limits
-- **Debug Mode**: Enable debug logging with `DEBUG=true` environment variable
-- **Cross-Platform**: Works on Linux, macOS, and Windows (with WSL/Git Bash)
-- **Security Hardened**: Input sanitization, dependency validation, and environment variable protection
-- **Production Ready**: Comprehensive error handling and resource management
+- **Real-time Notifications**: Get instant Telegram alerts for Claude Code events
+- **Event Types**: Supports both `Notification` and `Stop` hooks
+- **Secure Configuration**: Uses environment variables for bot token and chat ID
+- **Cross-Platform**: Works on Windows, macOS, and Linux with bash scripts
+- **Robust Error Handling**: Comprehensive validation and retry logic
+- **Performance Optimized**: Fast-path processing for clean content
+- **Security Hardened**: Input sanitization and injection protection
+- **Markdown Support**: Proper Telegram MarkdownV2 formatting
+- **Debug Mode**: Optional verbose logging for troubleshooting
 
-## Prerequisites
+## 📦 Installation
 
-- Bash shell (Linux, macOS, or Windows with WSL/Git Bash)
-- curl command-line tool
-- Internet connection for Telegram API access
-- Telegram bot and chat ID
+### Option 1: Clone from GitHub
 
-## Setup
+```bash
+git clone https://github.com/adrianR84/claude-code-telegram-notifications.git
+cd claude-code-telegram-notifications
+```
 
-### 1. Create a Telegram Bot
+### Option 2: Direct Plugin Install
 
-1. Open Telegram and search for `@BotFather`
-2. Send `/newbot` to create a new bot
-3. Follow the instructions to name your bot
-4. Save the bot token (looks like: `1234567890:ABCdefGHIjklMNOpqrsTUVwxyz`)
+```bash
+claude-code plugin install https://github.com/adrianR84/claude-code-telegram-notifications
+```
 
-### 2. Get Your Chat ID
+### Option 3: Local Installation for Development
 
-1. Open Telegram and search for `@userinfobot`
-2. Send any message to the bot
-3. The bot will reply with your chat ID (looks like: `123456789`)
+```bash
+# Clone the repository
+git clone https://github.com/adrianR84/claude-code-telegram-notifications.git
+cd claude-code-telegram-notifications
 
-### 3. Configure the Plugin
+# Install locally
+claude-code plugin install ./
+```
 
-1. Copy `.env.example` to `.env`:
+## ⚙️ Configuration
+
+1. **Copy the environment template:**
 
    ```bash
    cp .env.example .env
    ```
 
-2. Edit `.env` and replace with your actual values:
-   ```env
-   TELEGRAM_BOT_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz
+2. **Edit `.env` with your Telegram bot details:**
+   ```bash
+   # Get these from @BotFather on Telegram
+   TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
    TELEGRAM_CHAT_ID=123456789
    ```
 
-## Installation
+### Getting Telegram Credentials
 
-### Option 1: Via Plugin Marketplace (Recommended)
+1. **Create a Telegram Bot:**
+   - Message @BotFather on Telegram
+   - Send `/newbot`
+   - Follow the instructions to create your bot
+   - Copy the bot token
 
-First, add the marketplace:
+2. **Get Your Chat ID:**
+   - Message your bot on Telegram
+   - Visit `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+   - Find your `chat_id` in the response (positive number or @username)
 
-```
-/plugin marketplace add /path/to/claude-code-telegram-notifications
-```
-
-Then install the plugin:
-
-```
-/plugin install telegram-notifications@claude-code-telegram-notifications
-```
-
-### Option 2: Direct Plugin Install
-
-```
-/plugin install /path/to/claude-code-telegram-notifications
-```
-
-### Option 3: Local Installation (for development)
-
-```
-/plugin marketplace add /path/to/claude-code-telegram-notifications
-/plugin install telegram-notifications@claude-code-telegram-notifications
-```
-
-## Usage
-
-Once installed and configured, the plugin automatically:
-
-1. Sends a Telegram notification when Claude Code needs your attention
-2. Sends a "Finished responding" notification when Claude completes a response
-
-## Hook Events
-
-The plugin responds to these Claude Code hook events:
-
-- `Notification` - Triggered when Claude Code sends notifications
-- `Stop` - Triggered when Claude Code finishes responding
-
-## Project Structure
-
-```
-claude-code-telegram-notifications/
-├── .claude-plugin/
-│   ├── plugin.json          # Plugin manifest
-│   └── marketplace.json     # Marketplace manifest
-├── hooks/
-│   └── hooks.json           # Hook configuration
-├── scripts/
-│   ├── telegram-utils.sh         # Shared utility functions
-│   ├── telegram-notification.sh  # Notification handler
-│   └── telegram-stop.sh          # Stop event handler
-├── tests/
-│   ├── test-security.sh          # Security and functionality tests
-│   ├── test-performance.sh        # Performance benchmarking
-│   ├── test-function.sh          # Basic function tests
-│   ├── run-all-tests.sh          # Test runner
-│   └── README.md                 # Test documentation
-├── .env.example             # Environment variables template
-├── .env                     # Your actual configuration (create this)
-└── README.md
-```
-
-## Testing
+## 🧪 Testing
 
 ### Quick Test
 
@@ -156,7 +107,82 @@ The test suite includes:
 
 See `tests/README.md` for detailed test information.
 
-## Troubleshooting
+## 📁 Project Structure
+
+```
+claude-code-telegram-notifications/
+├── .claude-plugin/
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace manifest
+├── hooks/
+│   └── hooks.json           # Hook configuration
+├── scripts/
+│   ├── telegram-utils.sh         # Shared utility functions
+│   ├── telegram-notification.sh  # Notification handler
+│   └── telegram-stop.sh          # Stop event handler
+├── tests/
+│   ├── test-security.sh          # Security and functionality tests
+│   ├── test-performance.sh        # Performance benchmarking
+│   ├── test-function.sh          # Basic function tests
+│   ├── run-all-tests.sh          # Test runner
+│   └── README.md                 # Test documentation
+├── .env.example             # Environment variables template
+├── .env                     # Your actual configuration (create this)
+└── README.md
+```
+
+## 🔧 How It Works
+
+1. **Hook Registration**: The plugin registers `Notification` and `Stop` hooks with Claude Code
+2. **Event Detection**: When events occur, Claude Code triggers the corresponding hook
+3. **Message Processing**: Scripts parse the JSON input and extract relevant information
+4. **Security Validation**: All inputs are validated and sanitized before processing
+5. **Telegram API**: Messages are sent to your Telegram bot using the Bot API
+6. **Error Handling**: Failed requests are retried with exponential backoff
+
+## 🛡️ Security Features
+
+- **Input Validation**: Comprehensive JSON structure and content validation
+- **Sanitization**: Control characters and dangerous content removed
+- **Environment Protection**: Invalid variable names rejected
+- **Injection Prevention**: Protection against command injection attacks
+- **Resource Management**: Proper cleanup and file descriptor handling
+- **Error Isolation**: Sensitive data filtered from error logs
+
+## ⚡ Performance Optimizations
+
+- **Fast-Path Processing**: Skip unnecessary processing for clean content
+- **Optimized JSON Parsing**: Single regex pattern with minimal fallbacks
+- **Bash Built-ins**: Use parameter expansion instead of subprocess calls
+- **Intelligent Caching**: Avoid redundant operations
+- **Efficient Retry Logic**: Exponential backoff with reasonable limits
+
+## 🔍 Debugging
+
+Enable debug mode for detailed logging:
+
+```bash
+DEBUG=true bash ./scripts/telegram-notification.sh
+```
+
+Debug output includes:
+
+- Environment loading details
+- JSON parsing steps
+- Telegram API responses
+- Error stack traces
+
+## 📋 Requirements
+
+- **Claude Code**: Latest version with plugin support
+- **Bash**: Version 4.0+ recommended (fallbacks for older versions)
+- **curl**: For HTTP requests to Telegram API
+- **sed**: For text processing
+- **grep**: For pattern matching
+- **tr**: For character translation
+- **wc**: For counting operations
+
+## 🚨 Troubleshooting
 
 ### Common Issues
 
@@ -165,56 +191,46 @@ See `tests/README.md` for detailed test information.
    - Verify the values are correct and have no extra spaces
 
 2. **"Failed to send Telegram notification"**
-   - Check your bot token is correct
-   - Verify your chat ID is correct
-   - Ensure you've started a chat with your bot first
+   - Check your bot token is valid
+   - Verify your chat ID is correct (numeric or @username)
+   - Ensure your bot can message you (send it a message first)
 
-3. **Script permissions**
-   - Make scripts executable:
-     ```bash
-     chmod +x scripts/*.sh
-     ```
+3. **"Invalid JSON format"**
+   - The hook input should be valid JSON
+   - Check for unbalanced braces or missing quotes
 
-4. **Debug mode**
-   - Enable debug logging:
-     ```bash
-     export DEBUG=true
-     ```
-   - Or add to `.env` file:
-     ```env
-     DEBUG=true
-     ```
+4. **"Missing required dependencies"**
+   - Install missing commands: `curl`, `sed`, `grep`, `tr`, `wc`
+   - On Windows: Use Git Bash or WSL
 
-### Security Features
+### Getting Help
 
-The plugin includes comprehensive security measures:
+- **GitHub Issues**: [Report bugs](https://github.com/adrianR84/claude-code-telegram-notifications/issues)
+- **Discussions**: [Ask questions](https://github.com/adrianR84/claude-code-telegram-notifications/discussions)
+- **Wiki**: [Documentation](https://github.com/adrianR84/claude-code-telegram-notifications/wiki)
 
-- **Input Validation**: All JSON input is validated for structure and content
-- **Message Sanitization**: Control characters and dangerous content are removed
-- **Environment Protection**: Invalid environment variable names are rejected
-- **Dependency Checking**: Required commands are verified at startup
-- **Error Sanitization**: Sensitive data is removed from error logs
-- **Resource Management**: Proper file descriptor handling and cleanup
+## 📄 License
 
-### Advanced Configuration
+MIT License - see [LICENSE](LICENSE) file for details.
 
-The plugin supports additional environment variables in your `.env` file:
+## 🤝 Contributing
 
-```env
-# Required
-TELEGRAM_BOT_TOKEN=your_bot_token_here
-TELEGRAM_CHAT_ID=your_chat_id_here
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 🌟 Acknowledgments
 
 # Optional
-DEBUG=true                    # Enable debug logging
-```
+
+DEBUG=true # Enable debug logging
+
+````
 
 Check if your bot works:
 
 ```bash
 token="YOUR_BOT_TOKEN"
 curl -s "https://api.telegram.org/bot$token/getMe"
-```
+````
 
 ## License
 
