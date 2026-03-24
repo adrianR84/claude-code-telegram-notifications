@@ -32,12 +32,12 @@ if [[ -n "$raw_input" ]]; then
     # Try to extract meaningful content from the input
     task_info=$(echo "$raw_input" | grep -o '"message":"[^"]*"' | sed 's/"message":"\([^"]*\)"/\1/' | head -c 50)
     if [[ -n "$task_info" ]]; then
-        message="✅ Completed: $task_info"
+        message="Completed: $task_info"
     else
-        message="✅ Finished responding"
+        message="Finished responding"
     fi
 else
-    message="✅ Finished responding"
+    message="Finished responding"
 fi
 
 # Format the message for Telegram
