@@ -82,6 +82,8 @@ load_env() {
         ".env"       # Current working directory
         "$(pwd)/.env"  # Absolute path to current directory
         "$CLAUDE_PLUGIN_ROOT/.env"  # Plugin root directory
+        "/mnt/c/_Adi/_Work/Apps/claude-code-telegram-notifications/.env"  # Original project location
+        "/c/_Adi/_Work/Apps/claude-code-telegram-notifications/.env"  # Windows path
     )
     
     debug_log "Searching for .env file in these locations:"
@@ -105,11 +107,14 @@ load_env() {
     
     if [[ "$found_env" == "true" ]]; then
         debug_log "Environment file found, loading variables..."
+        debug_log "File content preview:"
+        debug_log "$(head -10 "$env_file" | sed 's/^/  /')"
+        
         # Use process substitution to avoid file descriptor leaks
-        while IFS='=' read -r key value; do
+        while IFS='=' read -r key value || [[ -n "$key" ]]; do
             # Skip comments and empty lines
             [[ $key =~ ^[[:space:]]*# ]] && continue
-            [[ -z "$key" ]] && continue
+            [[ -z "${key// }" ]] && continue
             
             debug_log "Processing line: key='$key', value='$value'"
             
