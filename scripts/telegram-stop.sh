@@ -17,31 +17,10 @@ if ! init_telegram_config; then
     exit 1
 fi
 
-# Try to read any input from stdin (in case Claude passes context)
-raw_input=""
-if read -t 1; then
-    raw_input=$(cat)
-    echo "Read from stdin: '$raw_input'"
-elif [[ -p /dev/stdin ]]; then
-    raw_input=$(cat)
-    echo "Read from stdin (pipe): '$raw_input'"
-fi
-
-# Extract message from input if available, otherwise use default
-if [[ -n "$raw_input" ]]; then
-    # Try to extract meaningful content from the input
-    task_info=$(echo "$raw_input" | grep -o '"message":"[^"]*"' | sed 's/"message":"\([^"]*\)"/\1/' | head -c 50)
-    if [[ -n "$task_info" ]]; then
-        message="Completed: $task_info"
-    else
-        message="Finished responding"
-    fi
-else
-    message="Finished responding"
-fi
-
 # Format the message for Telegram
 title="*Claude Code*"
+message="Finished Task"
+
 telegram_message="$title
 
 $message"

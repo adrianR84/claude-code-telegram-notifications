@@ -23,7 +23,7 @@ message=$(extract_json_value "$raw" "message")
 notification_type=$(extract_json_value "$raw" "notification_type")
 
 # Set defaults if not found
-title="🤖 Claude Code Notification"
+title="*Claude Code Notification*"
 [[ -z "$notification_type" ]] && notification_type="Notification"
 [[ -z "$message" ]] && message="(no message)"
 
