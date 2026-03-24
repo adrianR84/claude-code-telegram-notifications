@@ -18,8 +18,8 @@ if ! init_telegram_config; then
 fi
 
 # Format the message for Telegram
-title="🤖 Claude Code"
-message="✅ Finished responding"
+title="*Claude Code*"
+message="Finished responding"
 
 telegram_message="$title
 
