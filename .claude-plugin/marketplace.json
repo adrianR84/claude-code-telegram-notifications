@@ -3,21 +3,19 @@
   "owner": {
     "name": "adrianR84"
   },
-  "metadata": {
-    "description": "Telegram bot notifications for Claude Code",
-    "version": "1.0.0"
-  },
+  "description": "Telegram bot notifications for Claude Code",
   "plugins": [
     {
       "name": "telegram-notifications",
       "source": "./",
-      "description": "Telegram bot notifications for Claude Code events using Telegram Bot API",
-      "version": "1.0.0",
+      "description": "Telegram notifications for Claude Code events",
       "author": {
-        "name": "Adi R"
+        "name": "adrianR84"
       },
-      "license": "MIT",
-      "keywords": ["telegram", "bot", "notifications", "hooks", "api"]
+      "category": "development",
+      "repository": "https://github.com/adrianR84/claude-code-telegram-notifications",
+      "keywords": ["telegram", "notifications", "hooks"],
+      "license": "MIT"
     }
   ]
 }
