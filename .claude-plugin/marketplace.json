@@ -15,7 +15,8 @@
       "category": "development",
       "repository": "https://github.com/adrianR84/claude-code-telegram-notifications",
       "keywords": ["telegram", "notifications", "hooks"],
-      "license": "MIT"
+      "license": "MIT",
+	  "version": "1.0.1"
     }
   ]
 }
